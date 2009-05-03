@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: DFE News Harvester
-Plugin URI: 
+Plugin URI: http://holisticnetworking.net/plugins/2009/04/27/the-dfe-news-harvester-plugin/
 Description: Leverages WP's RSS functions to register, read and harvest from desired feeds.
 Author: Tom Belknap
 Version: 0.5
