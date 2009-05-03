@@ -1,6 +1,6 @@
 === The DFE News Harvester ===
 Contributors: dragonflyeye
-Tags: comments, spam
+Tags: news, rss, feed
 Requires at least: 2.7
 Tested up to: 2.7.1
 Stable tag: 0.5
