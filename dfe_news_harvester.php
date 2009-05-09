@@ -23,6 +23,8 @@ Author URI: http://holisticnetworking.net/
 //			post.
 //  0.5 ~ Cleaned up and improved createPosts() function.  Moved many functions over to methods 
 //			of the NewsHarvester class.  Creating option to edit registered feeds.
+//	0.6 ~ Added a new "Harvest This" feature which acts like "Press This," but with DFE News
+//			Harvester meta fields for easy inclusion of news you find anywhere on the internet.
 //==============================================================================================
 
 // Hooking into WordPress
@@ -199,7 +201,12 @@ function dfenh_config() {
 	$nh = new NewsHarvester();
 		$nh->getOptions();
 	?>
+<h1>DFE News Harvester Configuration Options</h1>
+<h3>Harvest This!</h3>
+<p>Drag the below link into your toolbar to have access to DFE News Harvester anywhere you are on the Internet, just like the WP Press This function</p>
+<p class="pressthis"><a href="<?php echo htmlspecialchars( $nh->dfenh_get_shortcut_link() ); ?>" title="<?php echo attribute_escape(__('Harvest This')) ?>"><?php _e('Harvest This') ?></a></p>
 <form action="" method="post" name="dfenh_config" id="dfenh_config">
+<h3>Configuration</h3>
     <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center" class="form-table">
         <tr>
             <td colspan="2" valign="top"><p>Set the maximum number of articles which will appear from a given feed.  Note that this is a maximum.  If there are less articles than you specify either in the feed or that are newer than the update time, the actual number may be less.</p></td>

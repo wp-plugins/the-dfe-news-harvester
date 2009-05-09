@@ -325,5 +325,40 @@ class NewsHarvester {
 		$werd = strtolower(trim(preg_replace('#[^\p{L}\p{N}]+#u', '', $werd)));
 		return $werd;
 	}
+
+
+	/*///////////////////////////////////////////////////////////////////////
+	//  Function: dfenh_get_shortcut_link()                                //
+	//  Purpose: Modified version of the 'Press This' javascript           //
+	//  	function which provides the 'Press This' popup window          //
+	///////////////////////////////////////////////////////////////////////*/	
+	public function dfenh_get_shortcut_link() {
+		$link = "javascript:
+			  var d=document,
+			  w=window,
+			  e=w.getSelection,
+			  k=d.getSelection,
+			  x=d.selection,
+			  s=(e?e():(k)?k():(x?x.createRange().text:0)),
+			  f='" . admin_url('harvest-this.php') . "',
+			  l=d.location,
+			  e=encodeURIComponent,
+			  g=f+'?u='+e(l.href)+'&t='+e(d.title)+'&s='+e(s)+'&v=2';
+			  function a(){
+				  if(!w.open(g,'t','toolbar=0,resizable=0,scrollbars=1,status=1,width=720,height=570')){
+					  l.href=g;
+				  }
+			  }";
+			  if (strpos($_SERVER['HTTP_USER_AGENT'], 'Firefox') !== false)
+				  $link .= 'setTimeout(a,0);';
+			  else
+				  $link .= 'a();';
+		
+			  $link .= "void(0);";
+		
+		$link = str_replace(array("\r", "\n", "\t"),  '', $link);
+	
+	return apply_filters('shortcut_link', $link);
+	}
 }
 ?>
