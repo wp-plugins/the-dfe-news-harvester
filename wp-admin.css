@@ -1,0 +1,54 @@
+/*  
+Template Name: DragonFlyEye.Net News Harvester wp-admin Styles
+Template URI: http://holisticnetworking.net
+Description: Provides styles to the News Harvester plugin
+Version: 0.1
+Author: Thomas J Belknap
+Author URI: http://holisticnetworking.net
+*/
+
+.dfenh_blocks label {
+	display: block;
+	float: left;
+	width: 120px;
+}
+
+.dfenh_inlines label {
+	display: inline;
+	float: none;
+}
+
+.option1 {
+
+}
+
+.option2 {
+	display: none;
+}
+
+.option3 {
+	display: none;
+}
+
+.dfenh_inlines {
+	display: block;
+	float: left;
+	padding-left: 10px;
+}
+
+.dfenh_blocks {
+	display: block;
+}
+
+.dfenh_thead {
+	font-size: 1.4em;
+	font-weight: bold;
+}
+
+.edit {
+	display: none;
+}
+
+.form-table p {
+	margin-top: 0px;
+}
