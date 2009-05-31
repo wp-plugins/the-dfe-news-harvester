@@ -25,6 +25,8 @@ Author URI: http://holisticnetworking.net/
 //			of the NewsHarvester class.  Creating option to edit registered feeds.
 //	0.6 ~ Added a new "Harvest This" feature which acts like "Press This," but with DFE News
 //			Harvester meta fields for easy inclusion of news you find anywhere on the internet.
+//	0.7 ~ Grr!  Didn't realize WP Plugins would change the name of the folder.  Had to make some
+//			changes to some of the file calls for non-MU users (see comments on plugin page).
 //==============================================================================================
 
 // Hooking into WordPress
@@ -46,13 +48,13 @@ function dfenh_add_menus() {
 
 function dfenh_add_style() {
     $url = get_settings('siteurl');
-    $url = $url . '/wp-content/plugins/dfe_news_harvester/wp-admin.css';
+    $url = $url . '/wp-content/plugins/the-dfe-news-harvester/wp-admin.css';
     echo '<link rel="stylesheet" type="text/css" href="' . $url . '" />';
 }
 
 function dfenh_enqueue_script() {
 	if(stristr( $_SERVER['REQUEST_URI'], 'dfe_news_harvester.php' )) {
-		wp_enqueue_script('dfenh_js', '/wp-content/plugins/dfe_news_harvester/dfe_news_harvester.js');
+		wp_enqueue_script('dfenh_js', '/wp-content/plugins/the-dfe-news-harvester/dfe_news_harvester.js');
 	}
 }
 
@@ -182,6 +184,7 @@ function dfenh_config() {
 	include(dirname(__FILE__).'/news_harvester.class.php');
 	
 	if($_POST['dfenh_config-save']) {
+		$options['featured_category'] = strip_tags(stripslashes($_POST['dfenh_config-feature']));
 		$options['number'] = strip_tags(stripslashes($_POST['dfenh_config-feednum']));
 		$options['update'] = strip_tags(stripslashes($_POST['dfenh_config-update']));
 		$options['append'] = strip_tags(stripslashes($_POST['dfenh_config-append']));
@@ -209,37 +212,45 @@ function dfenh_config() {
 <h3>Configuration</h3>
     <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center" class="form-table">
         <tr>
-            <td colspan="2" valign="top"><p>Set the maximum number of articles which will appear from a given feed.  Note that this is a maximum.  If there are less articles than you specify either in the feed or that are newer than the update time, the actual number may be less.</p></td>
+            <th valign="top">Featured Category:</th>
+            <td valign="top">
+                <p>When you make an article a "feature," you add the option to declare a bunch of extra meta values: an article image link, an image credit, an article summary, extra categories to assign.  It is up to the site administrator to know how to handle these meta values.  Creating a featured article also gives you the option to delay publication for as much as three hours.</p>
+                <select name="dfenh_config-feature" size="1">
+						<option value="none">Select</option>
+<?php  
+	foreach($nh->categories as $cat) {
+?>
+						<option value="<?php echo($cat->cat_ID); ?>" <?php if($cat->cat_ID == $nh->featured_category) { ?> selected <?php } ?>><?php echo($cat->cat_name); ?></option>
+<?php } ?>
+					</select>
+            </td>
         </tr>
         <tr>
             <th valign="top">Display Articles:</th>
-            <td valign="top"><input name="dfenh_config-feednum" type="text" size="10" value="<?php echo($nh->number) ?>" /></td>
+            <td valign="top"><p>Set the maximum number of articles which will appear from a given feed.  Note that this is a maximum.  If there are less articles than you specify either in the feed or that are newer than the update time, the actual number may be less.</p>
+            	<input name="dfenh_config-feednum" type="text" size="10" value="<?php echo($nh->number) ?>" /></td>
         </tr>
-            <td colspan="2" valign="top"><p>In order to avoid posting the same article twice, the plugin will update the "last viewed" time and only display articles newer than that date.  You can set how the last viewed time is determined below:</p></td>
         <tr>
             <th valign="top">Update:</th>
             <td valign="top">
+            	<p>In order to avoid posting the same article twice, the plugin will update the "last viewed" time and only display articles newer than that date.  You can set how the last viewed time is determined below:</p>
                 <label><input type="radio" name="dfenh_config-update" value="on-feed" id="dfenh_config-update_0" <?php if($nh->update == 'on-feed') { echo('checked'); } ?> />When I view the feed</label><br />
                 <label><input type="radio" name="dfenh_config-update" value="on-publish" id="dfenh_config-update_1" <?php if($nh->update == 'on-publish') { echo('checked'); } ?> />Only when I've publish posts from the feed</label><br />
                 <label><input type="radio" name="dfenh_config-update" value="do-not" id="dfenh_config-update_1" <?php if($nh->update == 'do-not') { echo('checked'); } ?> />Do not update, display all articles</label>
             </td>
         </tr>
         <tr>
-            <td colspan="2" valign="top"><p>You can choose to have post titles appended to include the name of the news source, specified either as the name or the suffix in the "Feeds" config screen.</p></td>
-        </tr>
-        <tr>
             <th valign="top">Append Posts:</th>
             <td valign="top">
+            	<p>You can choose to have post titles appended to include the name of the news source, specified either as the name or the suffix in the "Feeds" config screen.</p>
                 <label><input type="radio" name="dfenh_config-append" value="1" <?php if($nh->append) { echo('checked'); } ?> />Yes</label><br />
                 <label><input type="radio" name="dfenh_config-append" value="0" <?php if(!$nh->append) { echo('checked'); } ?> />No</label>
             </td>
         </tr>
         <tr>
-            <td colspan="2" valign="top"><p>If you would prefer that articles posted to your site get dated with the original article's date, you can specify that here.  Otherwise, the post will be timestamped with the current time and date.  It may be of benefit to have featured articles post as the current time and date so they are the very latest posts on your site.  If so, the same timestamp option appears for features.</p></td>
-        </tr>
-        <tr>
             <th valign="top">Post Dates:</th>
             <td valign="top">
+            	<p>If you would prefer that articles posted to your site get dated with the original article's date, you can specify that here.  Otherwise, the post will be timestamped with the current time and date.  It may be of benefit to have featured articles post as the current time and date so they are the very latest posts on your site.  If so, the same timestamp option appears for features.</p>
 				<table>
 					<tr>
 						<td>
@@ -258,11 +269,10 @@ function dfenh_config() {
             </td>
         </tr>
         <tr>
-            <td colspan="2" valign="top"><p>When publishing articles marked as "features," you can specify that you only want those posts saved as drafts or have them publish directly on save.</p></td>
-        </tr>
-        <tr>
             <th valign="top">Publish Features:</th>
-            <td valign="top"><select name="dfenh_config-publish_features" size="1">
+            <td valign="top">
+            	<p>When publishing articles marked as "features," you can specify that you only want those posts saved as drafts or have them publish directly on save.</p>
+                <select name="dfenh_config-publish_features" size="1">
                     <option value="publish" <?php if($nh->publish_features == 'publish') { echo('selected="selected"'); } ?> >Publish immediately</option>
                     <option value="draft" <?php if($nh->publish_features == 'draft') { echo('selected="selected"'); } ?> >Save as Draft</option>
                 </select>

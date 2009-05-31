@@ -3,7 +3,7 @@ Contributors: dragonflyeye
 Tags: news, rss, feed
 Requires at least: 2.7
 Tested up to: 2.7.1
-Stable tag: 0.6
+Stable tag: 0.7
 
 Register and monitor news feeds, post article links as posts
 

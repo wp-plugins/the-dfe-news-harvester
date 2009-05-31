@@ -29,10 +29,9 @@ class NewsHarvester {
 			$options['publish_features'] ? ( $this->publish_features = $options['publish_features'] ) : ( $this->publish_features = '' );
 			$this->use_pubdate = $options['use_pubdate'];
 			$this->publish_features_pubdate = $options['publish_features_pubdate'];
-		$checkfeeds = get_site_option('dfenh_current_feeds');
+		function_exists('get_site_option') ? ($checkfeeds = get_site_option('dfenh_current_feeds')) : ($checkfeeds = get_option('dfenh_current_feeds'));
 		$this->feeds = $this->checkFeed($checkfeeds);
-		$display = get_site_option('widget_features');
-			$display['featured_category'] ? ( $this->featured_category = $display['featured_category'] ) : ( $this->featured_category = 0 );
+		$this->featured_category = $options['featured_category'];
      }
 
 	/*///////////////////////////////////////////////////////////////////////

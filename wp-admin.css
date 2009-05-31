@@ -48,3 +48,7 @@ Author URI: http://holisticnetworking.net
 .edit {
 	display: none;
 }
+
+.form-table p {
+	margin-top: 0px;
+}
