@@ -72,7 +72,11 @@ class NewsHarvester {
 		if($thisfeed['url'] && $thisfeed['name'] && $thisfeed['suffix'] && $thisfeed['cat']) {
 			$thisfeed['feed_id'] = rand();
 			$this->feeds[] = $thisfeed;
-			update_site_option('dfenh_current_feeds', $this->feeds);
+			if(function_exists('update_site_option')) {
+				update_site_option('dfenh_current_feeds', $this->feeds);
+			} else {
+				update_option('dfenh_current_feeds', $this->feeds);
+			}
 			?><div id="message" class="updated fade">Feed registered!</div><?php
 		} else {
 			?><div id="message" class="updated fade">Missing information, feed not created.</div><?php
@@ -95,7 +99,11 @@ class NewsHarvester {
 			}
 		}
 		$this->feeds = $newfeeds;
-		update_site_option('dfenh_current_feeds', $newfeeds);
+		if(function_exists('update_site_option')) {
+			update_site_option('dfenh_current_feeds', $newfeeds);
+		} else {
+			update_option('dfenh_current_feeds', $newfeeds);
+		}
 		?><div id="message" class="updated fade">Feed deleted!</div><?php
 	}
 	
@@ -118,7 +126,11 @@ class NewsHarvester {
 				if ($data['dfenh_feed_cat'] != 'none') { $thisfeed['cat'] = strip_tags(stripslashes($data['dfenh_feed_cat'])); }
 				if($thisfeed['url'] && $thisfeed['name'] && $thisfeed['suffix'] && $thisfeed['cat']) {
 					$this->feeds[$y] = $thisfeed;
-					update_site_option('dfenh_current_feeds', $this->feeds);
+					if(function_exists('update_site_option')) {
+						update_site_option('dfenh_current_feeds', $this->feeds);
+					} else {
+						update_option('dfenh_current_feeds', $this->feeds);
+					}
 					?><div id="message" class="updated fade">"<?php echo $data['dfenh_feed_name']; ?>" feed edited</div><?php
 				} else {
 					?><div id="message" class="updated fade">"<strong>Missing information!</strong> <?php echo $data['dfenh_feed_name']; ?>" feed not edited.</div><?php
