@@ -53,7 +53,7 @@ function aposfix($text) {
  */
 function harvest_it() {
 	// Include our class file, populate with the correct options, and go
-	include(ABSPATH.PLUGINDIR.'/dfe_news_harvester/news_harvester.class.php');
+	include(ABSPATH.PLUGINDIR.'/the-dfe-news-harvester/news_harvester.class.php');
 	$nh = new NewsHarvester;
 	$nh->getOptions();
 
@@ -473,7 +473,6 @@ die;
 </head>
 <body class="press-this">
 <div id="wphead"></div>
-<?php if($_REQUEST['subtitle']) { echo('There is a subtitle'); } ?>
 <form action="harvest-this.php?action=post" method="post">
 <div id="poststuff" class="metabox-holder">
 	<div id="side-info-column">

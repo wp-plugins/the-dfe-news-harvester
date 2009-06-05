@@ -299,7 +299,7 @@ class NewsHarvester {
 	//  Function: titleToTags()                                            //
 	//  Purpose: Cleans title words and creates tags from them             //
 	///////////////////////////////////////////////////////////////////////*/
-	private function titleToTags($post_id, $title) {
+	public function titleToTags($post_id, $title) {
 		$t2toption = get_option('dfenh_titleToTags');
 		$stopwords = $t2toption['t2t_exceptions'];
 		if ( !$stopwords ) {

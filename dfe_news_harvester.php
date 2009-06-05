@@ -4,7 +4,7 @@ Plugin Name: DFE News Harvester
 Plugin URI: http://holisticnetworking.net/plugins/2009/04/27/the-dfe-news-harvester-plugin/
 Description: Leverages WP's RSS functions to register, read and harvest from desired feeds.
 Author: Tom Belknap
-Version: 0.7
+Version: 0.8
 Author URI: http://holisticnetworking.net/
 */ 
 
@@ -23,10 +23,11 @@ Author URI: http://holisticnetworking.net/
 //			post.
 //  0.5 ~ Cleaned up and improved createPosts() function.  Moved many functions over to methods 
 //			of the NewsHarvester class.  Creating option to edit registered feeds.
-//	0.6 ~ Added a new "Harvest This" feature which acts like "Press This," but with DFE News
+//  0.6 ~ Added a new "Harvest This" feature which acts like "Press This," but with DFE News
 //			Harvester meta fields for easy inclusion of news you find anywhere on the internet.
-//	0.7 ~ Grr!  Didn't realize WP Plugins would change the name of the folder.  Had to make some
+//  0.7 ~ Grr!  Didn't realize WP Plugins would change the name of the folder.  Had to make some
 //			changes to some of the file calls for non-MU users (see comments on plugin page).
+//  0.8 ~ Fixed some whoopsies in the harvest-this.php file.
 //==============================================================================================
 
 // Hooking into WordPress
